@@ -1,0 +1,3 @@
+score counter //klar
+restart button 
+något på space //klar

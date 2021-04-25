@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="zombiespel.css">
+  <title>Document</title>
+  <style>  
+ </style>
+</head>
+<script src="https://koda.nu/simple.js"> //länkar till ett bibliotek med kod som låter mig göra spelet.
+  
+  var zombies = []; // EN array som fylls upp av alla zombies.
+  var zombieclock = setInterval(zombiespawn, 1000) //denna variabeln "zombieclock" sätter ett interval på 1 sekund (1000 = 1 sekund) på funktionen zombie spawn. alltså den kör varhe sekund
+
+  function zombiespawn(){  //En funktion
+    zombies.push({x: random(totalWidth), y: random(totalHeight), speed:random(3,5)}); // Detta puttar fram en zombie på skärmen med en random speed.
+    
+  }
+
+  var timer = setInterval(ScoreCounter,5); //Denna koden ger variabeln timer ett interval på 5 millisekunder.
+  var score = 0; //Sätter ditt score till 0 så det börjar räkna från noll
+  function ScoreCounter(){
+    
+    score += 1; //lägger till +1 till score varje interval
+    document.getElementById("scores").innerHTML = score; //låter mig skriva ut score på skärmen genom att ge det ett id "scores"
+
+  } // Detta är timern, TA EJ BORT
+
+  function update() //funktioen update kommer från bibloteket och upprepas tusentals gånger per sekund som får saker att röra på sig.
+  {
+    clearScreen(); //tömmar allt på skärmen
+    picture(mouse.x, mouse.y, "steve.png") //Sätter en bild under mus pekaren som zombisarna följer.
+    
+  
+
+    for (var zombie of zombies) 
+    {
+
+     picture(zombie.x, zombie.y, "pngwing.com.png") //SÄtter en zombie bild på zombin.
+     
+    if (zombie.x < mouse.x)
+      zombie.x +=zombie.speed;
+    else
+      zombie.x -= zombie.speed;
+   
+    if (zombie.y < mouse.y)
+      zombie.y +=zombie.speed;
+    else
+      zombie.y -= zombie.speed; // Dessa if satser gör att zombisarna kan röra på sig genom att titta på musens plats och får zombisarna att gå mot den
+
+    if (keyboard.space) {zombies.length = 0} //.length sätter man efter en array för att se hur många objekt det finns i den. zombies.length = 0 sätter antalet objekt i arrayen till 0 som tar bort alla zombies.
+   
+    if (distance(mouse,zombie) <10) // Om zombisara kommer för nära musen så händer koden under
+    {
+      alert("Game Over"); //Poppar upp en alert som säger game over
+      stopUpdate(); //stoppar update funktionen så alla zombies slutar röra på sig.
+      window.location.reload() // laddar om sidan för att starta om spelet.
+      
+
+      
+    }
+    }
+    }
+</script>
+
+<body>
+ <p id="scores"></p> <!--Visar ditt score genom ID:t vi fick från functionen scoreCounter-->
+
+
+
+
+
+  
+</body>
+</html>
